@@ -1,0 +1,43 @@
+# compliance/valid/basic.yaml
+# Basic commands with no modifiers or arguments
+# Expected: deterministic one-liner output per CSS-1.0 §5
+
+- id: v-basic-01
+  description: "g with no arguments or flags"
+  input: "g"
+  output: 'python3 -c "import updater; updater.run(update_version=True, idea=None, dry=False)"'
+
+- id: v-basic-02
+  description: "up with no arguments or flags"
+  input: "up"
+  output: 'python3 -c "import updater; updater.run(update_version=False, idea=None, dry=False)"'
+
+- id: v-basic-03
+  description: "m with no flags"
+  input: "m"
+  output: 'python3 -c "import updater; updater.merge(force=False, dry=False)"'
+
+- id: v-basic-04
+  description: "g with dry flag"
+  input: "g dry"
+  output: 'python3 -c "import updater; updater.run(update_version=True, idea=None, dry=True)"'
+
+- id: v-basic-05
+  description: "up with dry flag"
+  input: "up dry"
+  output: 'python3 -c "import updater; updater.run(update_version=False, idea=None, dry=True)"'
+
+- id: v-basic-06
+  description: "m with force flag"
+  input: "m force"
+  output: 'python3 -c "import updater; updater.merge(force=True, dry=False)"'
+
+- id: v-basic-07
+  description: "m with force and dry flags"
+  input: "m force dry"
+  output: 'python3 -c "import updater; updater.merge(force=True, dry=True)"'
+
+- id: v-basic-08
+  description: "m with dry and force flags (order-independent)"
+  input: "m dry force"
+  output: 'python3 -c "import updater; updater.merge(force=True, dry=True)"'

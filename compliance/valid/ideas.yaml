@@ -1,0 +1,32 @@
+# compliance/valid/ideas.yaml
+# Commands with arguments (treated as idea=) per CSS-1.0 section 4.2
+
+- id: v-idea-01
+  description: g with argument treated as idea
+  input: 'g "Add CLI support"'
+  expected: "python3 -c \"import updater; updater.run(update_version=True, idea='Add CLI support', dry=False)\""
+
+- id: v-idea-02
+  description: up with argument treated as idea
+  input: 'up "Improve UX"'
+  expected: "python3 -c \"import updater; updater.run(update_version=False, idea='Improve UX', dry=False)\""
+
+- id: v-idea-03
+  description: g with argument and dry flag
+  input: 'g "Refactor parser" dry'
+  expected: "python3 -c \"import updater; updater.run(update_version=True, idea='Refactor parser', dry=True)\""
+
+- id: v-idea-04
+  description: up with argument and dry flag
+  input: 'up "Add tests" dry'
+  expected: "python3 -c \"import updater; updater.run(update_version=False, idea='Add tests', dry=True)\""
+
+- id: v-idea-05
+  description: g with multi-word argument
+  input: 'g "Add support for multi-line commands"'
+  expected: "python3 -c \"import updater; updater.run(update_version=True, idea='Add support for multi-line commands', dry=False)\""
+
+- id: v-idea-06
+  description: dry flag before argument - modifier ordering is free per CSS-1.0 section 3.1
+  input: 'g dry "Add docs"'
+  expected: "python3 -c \"import updater; updater.run(update_version=True, idea='Add docs', dry=True)\""

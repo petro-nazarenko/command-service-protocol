@@ -1,0 +1,47 @@
+# compliance/invalid/syntax.yaml
+# Commands that must produce ERROR: syntax per CSS-1.0 section 6.1
+
+- id: i-syn-01
+  description: empty input
+  input: ""
+  expected: "ERROR: syntax: empty command, expected base command (g | up | m)"
+
+- id: i-syn-02
+  description: unknown base command - go
+  input: "go"
+  expected: "ERROR: syntax: unknown command 'go'"
+
+- id: i-syn-03
+  description: unknown base command - run
+  input: "run"
+  expected: "ERROR: syntax: unknown command 'run'"
+
+- id: i-syn-04
+  description: unknown base command - update (full word not in MVP)
+  input: "update"
+  expected: "ERROR: syntax: unknown command 'update'"
+
+- id: i-syn-05
+  description: malformed quotes - single quotes not allowed
+  input: "g 'bad quotes'"
+  expected: "ERROR: syntax: invalid quotes"
+
+- id: i-syn-06
+  description: unclosed double quote
+  input: 'g "unclosed'
+  expected: "ERROR: syntax: invalid quotes"
+
+- id: i-syn-07
+  description: unknown flag - fast
+  input: "g fast"
+  expected: "ERROR: syntax: unknown flag 'fast'"
+
+- id: i-syn-08
+  description: unknown flag - verbose
+  input: "m verbose"
+  expected: "ERROR: syntax: unknown flag 'verbose'"
+
+- id: i-syn-09
+  description: unknown flag - push
+  input: "up push"
+  expected: "ERROR: syntax: unknown flag 'push'"

@@ -1,0 +1,17 @@
+# compliance/invalid/semantic.yaml
+# Commands that must produce ERROR: semantic per CSS-1.0 section 6.2
+
+- id: i-sem-01
+  description: multiple arguments not allowed
+  input: 'g "First idea" "Second idea"'
+  expected: "ERROR: semantic: multiple arguments not allowed"
+
+- id: i-sem-02
+  description: multiple arguments with dry flag
+  input: 'g "First" "Second" dry'
+  expected: "ERROR: semantic: multiple arguments not allowed"
+
+- id: i-sem-03
+  description: multiple arguments reversed order
+  input: 'up "Idea A" "Idea B"'
+  expected: "ERROR: semantic: multiple arguments not allowed"
