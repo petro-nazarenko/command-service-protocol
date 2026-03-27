@@ -1,5 +1,6 @@
 # compliance/valid/ideas.yaml
 # Commands with arguments (treated as idea=) per CSS-1.0 section 4.2
+# and key=value modifiers (idea=, note=) per CSS-1.0 section 4.3
 
 - id: v-idea-01
   description: g with argument treated as idea
@@ -30,3 +31,14 @@
   description: dry flag before argument - modifier ordering is free per CSS-1.0 section 3.1
   input: 'g dry "Add docs"'
   expected: "python3 -c \"import updater; updater.run(update_version=True, idea='Add docs', dry=True)\""
+
+- id: v-idea-07
+  description: idea= key=value modifier
+  input: 'up idea="Improve UX" no-version'
+  expected: "python3 -c \"import updater; updater.run(update_version=False, idea='Improve UX', dry=False, no_version=True)\""
+
+- id: v-idea-08
+  description: note= key=value modifier
+  input: 'g note="Track this"'
+  expected: "python3 -c \"import updater; updater.run(update_version=True, idea=None, dry=False, note='Track this')\""
+

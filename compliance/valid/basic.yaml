@@ -41,3 +41,34 @@
   description: "m with dry and force flags (order-independent)"
   input: "m dry force"
   output: 'python3 -c "import updater; updater.merge(force=True, dry=True)"'
+
+- id: v-basic-09
+  description: "gen alias normalizes to g"
+  input: "gen"
+  output: 'python3 -c "import updater; updater.run(update_version=True, idea=None, dry=False)"'
+
+- id: v-basic-10
+  description: "generate alias normalizes to g"
+  input: "generate"
+  output: 'python3 -c "import updater; updater.run(update_version=True, idea=None, dry=False)"'
+
+- id: v-basic-11
+  description: "update alias normalizes to up"
+  input: "update"
+  output: 'python3 -c "import updater; updater.run(update_version=False, idea=None, dry=False)"'
+
+- id: v-basic-12
+  description: "merge alias normalizes to m"
+  input: "merge"
+  output: 'python3 -c "import updater; updater.merge(force=False, dry=False)"'
+
+- id: v-basic-13
+  description: "sync with no flags"
+  input: "sync"
+  output: 'python3 -c "import updater; updater.sync(dry=False)"'
+
+- id: v-basic-14
+  description: "sync with dry flag"
+  input: "sync dry"
+  output: 'python3 -c "import updater; updater.sync(dry=True)"'
+

@@ -15,3 +15,19 @@
   description: multiple arguments reversed order
   input: 'up "Idea A" "Idea B"'
   expected: "ERROR: semantic: multiple arguments not allowed"
+
+- id: i-sem-04
+  description: argument cannot be combined with note=
+  input: 'g "My idea" note="My note"'
+  expected: "ERROR: semantic: argument cannot be combined with note="
+
+- id: i-sem-05
+  description: only-version and no-version cannot be used together
+  input: "g only-version no-version"
+  expected: "ERROR: semantic: only-version and no-version cannot be used together"
+
+- id: i-sem-06
+  description: only-status and no-status cannot be used together
+  input: "g only-status no-status"
+  expected: "ERROR: semantic: only-status and no-status cannot be used together"
+

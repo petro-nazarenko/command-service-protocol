@@ -71,6 +71,43 @@ class TestGenerateCommand:
         result = generate_one_liner(cmd)
         assert "update_version=True" in result
 
+    def test_g_with_no_version_flag(self):
+        """CSS-1.0 §4.3 — no-version flag included in one-liner"""
+        cmd = Command(base="g", flags={"no-version"})
+        result = generate_one_liner(cmd)
+        assert "no_version=True" in result
+
+    def test_g_with_no_status_flag(self):
+        cmd = Command(base="g", flags={"no-status"})
+        result = generate_one_liner(cmd)
+        assert "no_status=True" in result
+
+    def test_g_with_only_version_flag(self):
+        cmd = Command(base="g", flags={"only-version"})
+        result = generate_one_liner(cmd)
+        assert "only_version=True" in result
+
+    def test_g_with_only_status_flag(self):
+        cmd = Command(base="g", flags={"only-status"})
+        result = generate_one_liner(cmd)
+        assert "only_status=True" in result
+
+    def test_g_with_validate_flag(self):
+        cmd = Command(base="g", flags={"validate"})
+        result = generate_one_liner(cmd)
+        assert "validate=True" in result
+
+    def test_g_with_export_flag(self):
+        cmd = Command(base="g", flags={"export"})
+        result = generate_one_liner(cmd)
+        assert "export=True" in result
+
+    def test_g_with_note(self):
+        cmd = Command(base="g", note="Track progress")
+        result = generate_one_liner(cmd)
+        assert "note='Track progress'" in result
+        assert "updater.run(" in result
+
 
 # ──────────────────────────────────────────────
 # up command — CSS-1.0 §4.6.2
@@ -139,6 +176,49 @@ class TestMergeCommand:
 
 
 # ──────────────────────────────────────────────
+# sync command — CSS-1.0 §4.6.4
+# ──────────────────────────────────────────────
+
+class TestSyncCommand:
+
+    def test_sync_no_flags(self):
+        cmd = Command(base="sync")
+        result = generate_one_liner(cmd)
+        assert result == 'python3 -c "import updater; updater.sync(dry=False)"'
+
+    def test_sync_calls_sync_not_run(self):
+        cmd = Command(base="sync")
+        result = generate_one_liner(cmd)
+        assert "updater.sync(" in result
+        assert "updater.run(" not in result
+
+    def test_sync_dry(self):
+        cmd = Command(base="sync", flags={"dry"})
+        result = generate_one_liner(cmd)
+        assert "dry=True" in result
+
+    def test_sync_validate(self):
+        cmd = Command(base="sync", flags={"validate"})
+        result = generate_one_liner(cmd)
+        assert "validate=True" in result
+
+    def test_sync_export(self):
+        cmd = Command(base="sync", flags={"export"})
+        result = generate_one_liner(cmd)
+        assert "export=True" in result
+
+    def test_sync_force(self):
+        cmd = Command(base="sync", flags={"force"})
+        result = generate_one_liner(cmd)
+        assert "force=True" in result
+
+    def test_sync_is_single_line(self):
+        cmd = Command(base="sync", flags={"validate", "export", "dry"})
+        result = generate_one_liner(cmd)
+        assert "\n" not in result
+
+
+# ──────────────────────────────────────────────
 # Idea quoting — CSS-1.0 §5.2 safety
 # ──────────────────────────────────────────────
 
@@ -159,6 +239,11 @@ class TestIdeaQuoting:
         result = generate_one_liner(cmd)
         assert "\\'" in result
 
+    def test_note_with_single_quote_escaped(self):
+        cmd = Command(base="g", note="It's a note")
+        result = generate_one_liner(cmd)
+        assert "\\'" in result
+
 
 # ──────────────────────────────────────────────
 # Unsupported commands
@@ -167,6 +252,6 @@ class TestIdeaQuoting:
 class TestUnsupportedCommands:
 
     def test_unknown_base_raises(self):
-        cmd = Command(base="sync")
+        cmd = Command(base="deploy")
         with pytest.raises(ValueError, match="semantic: unsupported command"):
             generate_one_liner(cmd)

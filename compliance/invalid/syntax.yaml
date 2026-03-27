@@ -17,9 +17,9 @@
   expected: "ERROR: syntax: unknown command 'run'"
 
 - id: i-syn-04
-  description: unknown base command - update (full word not in MVP)
-  input: "update"
-  expected: "ERROR: syntax: unknown command 'update'"
+  description: unknown base command - deploy (never valid)
+  input: "deploy"
+  expected: "ERROR: syntax: unknown command 'deploy'"
 
 - id: i-syn-05
   description: malformed quotes - single quotes not allowed
