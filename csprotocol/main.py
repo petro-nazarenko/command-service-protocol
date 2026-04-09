@@ -5,8 +5,8 @@ Core handle() function and interactive REPL.
 CSS-1.0 §8 — FSM: Idle → Parsed → Validated → Generated → Executed
 """
 
-from csprotocol.parser import parse_command
 from csprotocol.generator import generate_one_liner
+from csprotocol.parser import parse_command
 
 
 def handle(text: str) -> str:

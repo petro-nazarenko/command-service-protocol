@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "csprotocol"
-version = "1.0.0-draft"
+version = "1.0.0a1"
 description = "Command Service Protocol — deterministic command interface for AI agents"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -61,3 +61,19 @@ python_functions = ["test_*"]
 
 [tool.hatch.version]
 path = "csprotocol/__init__.py"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
