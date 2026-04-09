@@ -10,6 +10,7 @@ Usage:
 """
 
 import sys
+
 from csprotocol.main import handle, repl
 
 

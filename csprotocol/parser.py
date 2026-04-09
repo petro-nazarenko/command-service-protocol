@@ -3,6 +3,7 @@ csprotocol.parser
 CSS-1.0 §3 — Syntax, §4 — Semantics (parse phase)
 """
 
+import re
 import shlex
 
 VALID_COMMANDS: set[str] = {"g", "up", "m"}
@@ -10,7 +11,12 @@ VALID_FLAGS: set[str] = {"force", "dry"}
 
 
 class Command:
-    def __init__(self, base: str, argument: str | None = None, flags: set[str] | None = None) -> None:
+    def __init__(
+        self,
+        base: str,
+        argument: str | None = None,
+        flags: set[str] | None = None,
+    ) -> None:
         self.base = base
         self.argument = argument
         self.flags = flags or set()
@@ -21,7 +27,11 @@ class Command:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Command):
             return NotImplemented
-        return self.base == other.base and self.argument == other.argument and self.flags == other.flags
+        return (
+            self.base == other.base
+            and self.argument == other.argument
+            and self.flags == other.flags
+        )
 
 
 def _check_single_quotes(text: str) -> None:
@@ -32,29 +42,6 @@ def _check_single_quotes(text: str) -> None:
             in_double = not in_double
         elif ch == chr(39) and not in_double:
             raise ValueError("syntax: invalid quotes")
-
-
-def _tokenize(text: str) -> list[tuple[str, bool]]:
-    """
-    Tokenize text, returning (token, was_quoted) pairs.
-    was_quoted=True means the token came from a double-quoted string.
-    """
-    lex = shlex.shlex(text, posix=True)
-    lex.whitespace_split = False
-    lex.whitespace = " "
-    lex.quotes = chr(34)
-    lex.commenters = ""
-    tokens = []
-    try:
-        while True:
-            token = lex.get_token()
-            if token is shlex.EOF:
-                break
-            was_quoted = lex.token != token or (lex.state is None)
-            tokens.append((token, lex.token == chr(34) or False))
-    except ValueError:
-        raise ValueError("syntax: invalid quotes")
-    return tokens
 
 
 def parse_command(text: str) -> Command:
@@ -80,7 +67,6 @@ def parse_command(text: str) -> Command:
     # by re-examining the source: quoted tokens start with a double-quote char
     # We reconstruct by scanning the original text
     quoted_values = set()
-    import re
     for m in re.finditer(r'"([^"]*)"', text):
         quoted_values.add(m.group(1))
 

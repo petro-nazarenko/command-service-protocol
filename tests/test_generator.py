@@ -6,12 +6,9 @@ Tests for csprotocol.generator.generate_one_liner()
 """
 
 import pytest
-import sys
-sys.path.insert(0, '/home/claude')
 
-from csprotocol.parser import Command
 from csprotocol.generator import generate_one_liner
-
+from csprotocol.parser import Command
 
 # ──────────────────────────────────────────────
 # Output contract — CSS-1.0 §5.2

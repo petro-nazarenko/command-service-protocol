@@ -2,8 +2,10 @@
 tests/test_compliance.py
 CSS-1.0 compliance runner
 """
-import sys, os, pytest
-sys.path.insert(0, "/home/claude")
+import os
+
+import pytest
+
 try:
     import yaml
     HAS_YAML = True

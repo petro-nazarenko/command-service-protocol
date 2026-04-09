@@ -6,11 +6,8 @@ Tests for csprotocol.parser.parse_command()
 """
 
 import pytest
-import sys
-sys.path.insert(0, '/home/claude')
 
-from csprotocol.parser import parse_command, Command
-
+from csprotocol.parser import parse_command
 
 # ──────────────────────────────────────────────
 # Valid commands — base only

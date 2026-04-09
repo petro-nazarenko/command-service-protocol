@@ -6,11 +6,7 @@ Tests for csprotocol.main.handle()
 End-to-end integration: raw string → one-liner or ERROR
 """
 
-import sys
-sys.path.insert(0, '/home/claude')
-
 from csprotocol.main import handle
-
 
 # ──────────────────────────────────────────────
 # End-to-end valid commands
